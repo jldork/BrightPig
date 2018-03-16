@@ -1,17 +1,7 @@
-import 'dart:async';
-//import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'google_client.dart';
 
 void main() => runApp(new MyApp());
-
-GoogleSignIn _googleSignIn = new GoogleSignIn(
-  scopes: <String>[
-    'email',
-    //'https://www.googleapis.com/auth/contacts.readonly',
-  ],
-);
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -54,35 +44,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   int _counter = 0;
-  GoogleSignInAccount _currentUser;
 
-  Future<Null> _doGooglesignIn() async {
-    try {
-      await _googleSignIn.signIn();
-    } catch (error) {
-      print("Error signing in");
-      print(error);
-    }
-  }
+  GoogleClient _client = new GoogleClient();
 
   @override
   void initState() {
-    super.initState();
 
-    if (_currentUser != null) {
-      print(_currentUser.displayName);
-    }
 
-    // Set Listener
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
-      setState(() {
-        _currentUser = account;
-      });
-    });
-
-    _doGooglesignIn();
   }
 
   void _incrementCounter() {
@@ -127,15 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new Text(
-              'You have pushed the button this many times:',
-            ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
+            new Text("$_counter"),
           ],
         ),
       ),

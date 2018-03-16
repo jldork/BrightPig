@@ -3,11 +3,20 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven { url "https://maven.google.com" }
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // If your app authenticates with a backend server or accesses Google APIs from your backend server, you must get the OAuth 2.0 client ID that was created for your server. To find the OAuth 2.0 client ID:
+        //Open the Credentials page in the API Console.
+        //The Web application type client ID is your backend server's OAuth 2.0 client ID.
+        // As part of enabling Google APIs() or Firebase services
+        // in your Android application you may have to add
+        // the google-services plugin to your build.gradle file:
+        classpath 'com.google.gms:google-services:3.1.0'
     }
 }
 
@@ -29,3 +38,4 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+

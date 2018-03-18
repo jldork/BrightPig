@@ -1,4 +1,4 @@
-package com.example.brightpig
+package com.brightpig.mobile
 
 import android.os.Bundle
 

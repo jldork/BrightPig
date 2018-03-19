@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../google_client.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class MyLoginPage extends StatefulWidget {
+  MyLoginPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyLoginPageState createState() => new _MyLoginPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyLoginPageState extends State<MyLoginPage> {
   static GoogleClient _client;
 
   @override

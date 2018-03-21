@@ -28,9 +28,9 @@ class _MyLoginPageState extends State<LoginPage> with UserAccount {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             new Image.asset(
-              'images/brightpig.png', //SVG not working
-              width: 128.0,
-              height: 128.0,
+              'images/logo.png', //SVG not working
+              width: 256.0,
+              height: 256.0,
             ),
             new PrimaryButton(
                 buttonText: 'Login with Google', onClick: _googleLogin)

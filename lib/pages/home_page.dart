@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../auth/user_account.dart';
+import 'package:flutter/scheduler.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -11,6 +12,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<HomePage> with UserAccount {
+  @override
+  void initState() {
+    super.initState();
+
+    if (!isLoggedIn) {
+      print("not logged in, going to login page");
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).pushNamed("/login");
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

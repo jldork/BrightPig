@@ -12,8 +12,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _MyLoginPageState extends State<LoginPage> with UserAccount {
-  void _googleLogin() {
-    new GoogleClient().doGooglesignIn();
+  void _googleLogin() async{
+    await new GoogleClient().doGooglesignIn();
+    Navigator.of(context).pop();
   }
 
   @override

@@ -1,31 +1,11 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart'
     show BaseRequest, IOClient, Response, StreamedResponse;
-
-/// Google APIs:
 import 'package:googleapis/calendar/v3.dart';
 import 'package:googleapis/people/v1.dart';
-
 //import 'package:url_launcher/url_launcher.dart';
 //import 'package:googleapis_auth/auth_browser.dart';
-
 //import 'package:googleapis_auth/auth_io.dart';
-
-import 'dart:async';
-
-class GoogleHttpClient extends IOClient {
-  Map<String, String> _headers;
-
-  GoogleHttpClient(this._headers) : super();
-
-  @override
-  Future<StreamedResponse> send(BaseRequest request) =>
-      super.send(request..headers.addAll(_headers));
-
-  @override
-  Future<Response> head(Object url, {Map<String, String> headers}) =>
-      super.head(url, headers: headers..addAll(_headers));
-}
 
 /// Singleton object for interacting with google APIs.
 ///
@@ -43,10 +23,35 @@ class GoogleHttpClient extends IOClient {
 /// Further more there is some dependency issue with the google-service gradle
 /// plugin and the boilerplate config, but example firebase_auth application
 /// somehow makes this work, so copying that should work.
-///
-///
-class GoogleClient {
+
+import 'dart:async';
+
+
+
+class GoogleHttpClient extends IOClient {
+  Map<String, String> _headers;
+  GoogleHttpClient(this._headers) : super();
+
+  @override
+  Future<StreamedResponse> send(BaseRequest request) =>
+      super.send(request..headers.addAll(_headers));
+
+  @override
+  Future<Response> head(Object url, {Map<String, String> headers}) =>
+      super.head(url, headers: headers..addAll(_headers));
+}
+abstract class Client{
+
+  bool isLoggedIn();
+}
+
+class GoogleClient extends Client{
   ///
+  static GoogleSignInAccount _currentUser;
+  CalendarApi calendarApi;
+  PeopleApi peopleApi;
+
+  /// Make a function that fills this in 
   static GoogleSignIn _googleSignIn = new GoogleSignIn(
     scopes: <String>[
       'email',
@@ -56,17 +61,9 @@ class GoogleClient {
     ],
   );
 
-  ///
-  static GoogleSignInAccount _currentUser;
-
-  //GoogleHttpClient _httpClient;
-
-  CalendarApi calendarApi;
-  PeopleApi peopleApi;
-
-  ///
+  
+  /// :) not sure what _internal does just yet...
   static final _instance = new GoogleClient._internal();
-
   GoogleClient._internal();
 
   factory GoogleClient() {
@@ -74,8 +71,6 @@ class GoogleClient {
       _currentUser = account;
       _instance._syncHeaders(account.authHeaders);
     });
-
-    GoogleClient.doGooglesignIn();
 
     return _instance;
   }
@@ -96,7 +91,7 @@ class GoogleClient {
   }
 
   ///
-  static Future<Null> doGooglesignIn() async {
+  Future<Null> doGooglesignIn() async {
     try {
       await _googleSignIn.signOut();
       await _googleSignIn.signIn();
@@ -104,5 +99,10 @@ class GoogleClient {
       print("Error signing in");
       print(error);
     }
+  }
+
+  @override
+  bool isLoggedIn() {
+    return _currentUser != null;
   }
 }

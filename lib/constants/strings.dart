@@ -1,0 +1,1 @@
+const String SAMPLE_STRING = 'Hello world';

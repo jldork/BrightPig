@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
-import 'pages/login_page.dart';
-import 'pages/home_page.dart';
+import 'pages/index.dart';
+import 'auth/user_account.dart';
+import 'constants/colors.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(new BrightPigApp());
 
-class MyApp extends StatelessWidget {
+class BrightPigApp extends StatefulWidget {
+  BrightPigApp({Key key, this.title}) : super(key: key);
+
+  final String title;
+  
+  @override
+  _AppState createState() => new _AppState();
+}
+
+class _AppState extends State<BrightPigApp> with UserAccount {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'BrightPig',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: new MyHomePage(title: 'BrightPig'),
-      routes: <String, WidgetBuilder>{
-        '/login': (BuildContext context) =>
-            new MyLoginPage(title: 'Please Login'),
-      }
-    );
+        title: 'BrightPig',
+        theme: new ThemeData(
+            primaryColor: PRIMARY,
+            accentColor: SECONDARY,
+            backgroundColor: Colors.pink,
+            fontFamily: 'Barlow'),
+        home: new HomePage(title: 'BrightPig'),
+        routes: <String, WidgetBuilder>{
+          '/login': (BuildContext context) =>
+              new LoginPage(title: 'Please Login'),
+        });
   }
 }

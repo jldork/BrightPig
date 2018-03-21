@@ -1,22 +1,6 @@
 import 'package:flutter/material.dart';
-
-var gradient = new RadialGradient(
-  center: const Alignment(0.0, 0.0), // near the top right
-  radius:  5.0,
-  colors: [
-    const Color.fromRGBO(59, 162, 169, 1.0), // Sea 100
-    const Color.fromRGBO(161, 126, 176, 1.0), // Heather 100
-    // const Color.fromRGBO(221, 104, 181, 1.0) // Pale Magenta
-  ],
-  stops: const [0.1, 1.0],
-);
-
-var textStyle = new TextStyle(
-  color: Colors.white,
-  fontFamily: 'SFProDisplay-Regular',
-  fontSize: 18.0,
-  fontWeight: FontWeight.normal,
-);
+import '../constants/colors.dart';
+import '../constants/styles.dart';
 
 class PrimaryButton extends StatelessWidget {
   final Function onClick;
@@ -47,7 +31,7 @@ class PrimaryButton extends StatelessWidget {
         onTap: onClick,
         child: new Container(
           decoration: new BoxDecoration(
-            gradient: gradient,
+            gradient: accentGradient,
             borderRadius: const BorderRadius.all(const Radius.circular(4.0)),
             boxShadow: <BoxShadow>[
               new BoxShadow(

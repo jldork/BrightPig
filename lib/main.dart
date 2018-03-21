@@ -9,7 +9,7 @@ class BrightPigApp extends StatefulWidget {
   BrightPigApp({Key key, this.title}) : super(key: key);
 
   final String title;
-  
+
   @override
   _AppState createState() => new _AppState();
 }
@@ -19,11 +19,6 @@ class _AppState extends State<BrightPigApp> with UserAccount {
   Widget build(BuildContext context) {
     return new MaterialApp(
         title: 'BrightPig',
-        theme: new ThemeData(
-            primaryColor: PRIMARY,
-            accentColor: SECONDARY,
-            backgroundColor: Colors.pink,
-            fontFamily: 'Barlow'),
         home: new HomePage(title: 'BrightPig'),
         routes: <String, WidgetBuilder>{
           '/login': (BuildContext context) =>

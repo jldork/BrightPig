@@ -2,18 +2,7 @@ import '../auth/google_client.dart';
 import 'package:flutter/material.dart';
 import '../auth/user_account.dart';
 import '../widgets/primary_button.dart';
-
-var loginGradient = new RadialGradient(
-  center: const Alignment(0.0, 0.0), // centered
-  radius:  5.0,
-  colors: [
-    const Color.fromRGBO(167, 127, 145, 0.2), // Sea 100
-    const Color.fromRGBO(225, 223, 224, 1.0), // Heather 100
-    // const Color.fromRGBO(221, 104, 181, 1.0) // Pale Magenta
-  ],
-  stops: const [0.999, 1.0],
-);
-
+import '../constants/colors.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -49,7 +38,7 @@ class _MyLoginPageState extends State<LoginPage> with UserAccount {
         ),
       ),
       decoration: new BoxDecoration(
-        gradient: loginGradient,
+        gradient: backgroundGradient,
       ),
     ));
   }

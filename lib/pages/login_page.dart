@@ -1,6 +1,7 @@
 import '../auth/google_client.dart';
 import 'package:flutter/material.dart';
 import '../auth/user_account.dart';
+import '../widgets/primary_button.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -11,8 +12,9 @@ class LoginPage extends StatefulWidget {
   _MyLoginPageState createState() => new _MyLoginPageState();
 }
 
+
 class _MyLoginPageState extends State<LoginPage> with UserAccount {
-  void _googleLogin() async{
+  void _googleLogin() async {
     await new GoogleClient().doGooglesignIn();
     Navigator.of(context).pop();
   }
@@ -28,11 +30,13 @@ class _MyLoginPageState extends State<LoginPage> with UserAccount {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             new Text("Please Log In"),
-            new RaisedButton(
-                child: const Text('Login with Google'), onPressed: _googleLogin)
+            new PrimaryButton(
+                buttonText: 'Login with Google',
+                onClick: _googleLogin)
           ],
         ),
       ),
     );
   }
 }
+

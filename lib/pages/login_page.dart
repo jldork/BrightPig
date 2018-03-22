@@ -28,7 +28,7 @@ class _MyLoginPageState extends State<LoginPage> with UserAccount {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             new Image.asset(
-              'images/logo.png', //SVG not working
+              'assets/images/logo.png',
               width: 256.0,
               height: 256.0,
             ),

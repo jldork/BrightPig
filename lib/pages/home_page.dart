@@ -35,8 +35,7 @@ class _MyHomePageState extends State<HomePage> with UserAccount {
           backgroundColor: PALE_GREY,
           actions: <Widget>[],
           centerTitle: true,
-          title: new Image.asset('images/logo_h_transparent.png')),
-      //title: new Text("Test")),
+          title: new Image.asset('assets/images/logo_h.png')),
       body: new Center(
         child: new Padding(
           padding: const EdgeInsets.all(8.0),

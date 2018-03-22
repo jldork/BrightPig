@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../auth/user_account.dart';
 import 'package:flutter/scheduler.dart';
+import '../constants/colors.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -26,16 +27,23 @@ class _MyHomePageState extends State<HomePage> with UserAccount {
 
   @override
   Widget build(BuildContext context) {
+    var _children = <Widget>[];
+
     return new Scaffold(
+      drawer: new Drawer(child: new ListView()),
       appBar: new AppBar(
-        title: new Text('HOMEPAGE'),
-      ),
+          backgroundColor: PALE_GREY,
+          actions: <Widget>[],
+          centerTitle: true,
+          title: new Image.asset('images/logo_h_transparent.png')),
+      //title: new Text("Test")),
       body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            new Text("TESTING HOME PAGE"),
-          ],
+        child: new Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: _children,
+          ),
         ),
       ),
     );

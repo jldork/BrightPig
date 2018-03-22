@@ -14,11 +14,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _MyLoginPageState extends State<LoginPage> with UserAccount {
-  void _googleLogin() async {
-    await new GoogleClient().doGooglesignIn();
+  void _googleLogin() {
+    googleClient.doGooglesignIn().then((values) {
+      print("POP NOW!");
+    });
     Navigator.of(context).pop();
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

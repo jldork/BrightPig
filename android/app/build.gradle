@@ -29,7 +29,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.brightpig.mobile"
+        applicationId "com.brightpig.android"
         minSdkVersion 16
         targetSdkVersion 27
         //multiDexEnabled = true

@@ -69,6 +69,7 @@ class MeetingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
+      margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, .0),
       padding: const EdgeInsets.fromLTRB(12.0, 20.0, 20.0, 12.0),
       decoration: new BoxDecoration(
         borderRadius: const BorderRadius.all(const Radius.circular(8.0)),
@@ -81,6 +82,7 @@ class MeetingTile extends StatelessWidget {
         ],
       ),
       child: new Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new CalendarIcon(date: dateTime),
           new Expanded(

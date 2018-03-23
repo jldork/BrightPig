@@ -18,6 +18,7 @@ class _MyHomePageState extends State<HomePage> with UserAccount {
   Widget build(BuildContext context) {
     var _children = <Widget>[
       
+      
       new MeetingTile(
           new DateTime.now().toUtc(), "Introductory Meeting With BrightPig",
           inviteeNames: [
@@ -26,6 +27,12 @@ class _MyHomePageState extends State<HomePage> with UserAccount {
             "Karla Polo",
             "Michael Davis",
             "Thomas Matecki"
+          ]),
+
+      new MeetingTile(
+          new DateTime.now().toUtc(), "BrightPig User Feedback",
+          inviteeNames: [
+            "Ola Gamberi"
           ])
     
     ];

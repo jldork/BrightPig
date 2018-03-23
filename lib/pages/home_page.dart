@@ -5,27 +5,15 @@ import '../constants/colors.dart';
 import '../widgets/meeting_tile.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
+  HomePage({Key key, this.logoutFn}) : super(key: key);
 
-  final String title;
+  final Function logoutFn;
 
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
 class _MyHomePageState extends State<HomePage> with UserAccount {
-  @override
-  void initState() {
-    super.initState();
-
-    if (!isLoggedIn) {
-      print("not logged in, going to login page");
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).pushNamed("/login");
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     var _children = <Widget>[

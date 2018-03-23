@@ -3,22 +3,27 @@ import 'package:flutter/material.dart';
 import '../auth/user_account.dart';
 import '../widgets/primary_button.dart';
 import '../constants/colors.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:async';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+class LoginPage extends StatelessWidget {
+  LoginPage({Key key, this.loginFn}) : super(key: key);
 
-  final String title;
+  final Function loginFn;
+  
+  static GoogleSignIn _googleSignIn = new GoogleSignIn(
+    scopes: <String>[
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+      "https://www.googleapis.com/auth/calendar",
+      "https://mail.google.com/",
+    ],
+  );
 
-  @override
-  _MyLoginPageState createState() => new _MyLoginPageState();
-}
-
-class _MyLoginPageState extends State<LoginPage> with UserAccount {
-  void _googleLogin() {
-    googleClient.doGooglesignIn().then((values) {
-      print("POP NOW!");
+  void _googleLogin() async {
+    await _googleSignIn.signIn().then((account){
+      loginFn(account, 'google');
     });
-    Navigator.of(context).pop();
   }
 
   @override

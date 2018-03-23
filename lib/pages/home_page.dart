@@ -10,11 +10,14 @@ class HomePage extends StatefulWidget {
   final Function logoutFn;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyHomePageState createState() => new _MyHomePageState(logoutFn);
 }
 
 
 class _MyHomePageState extends State<HomePage> with UserAccount {
+  final Function logoutFn;
+  _MyHomePageState(this.logoutFn);
+
   @override
   Widget build(BuildContext context) {
     var _meetingTiles = <Widget>[

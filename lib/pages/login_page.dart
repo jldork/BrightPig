@@ -1,10 +1,7 @@
-import '../auth/google_client.dart';
 import 'package:flutter/material.dart';
-import '../auth/user_account.dart';
 import '../widgets/primary_button.dart';
 import '../constants/colors.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'dart:async';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key key, this.loginFn}) : super(key: key);

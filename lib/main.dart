@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'auth/user_account.dart';
 import 'dart:async';
 import 'pages/index.dart';
+import 'auth/google_client.dart';
 
 void main() => runApp(new BrightPigApp());
 
@@ -14,18 +15,19 @@ class BrightPigApp extends StatefulWidget {
   _AppState createState() => new _AppState();
 }
 
-class _AppState extends State<BrightPigApp> with UserAccount {
+class _AppState extends State<BrightPigApp> {
   bool isSplash;
   bool isLoggedIn;
-
+  UserAccount user = new UserAccount();
+  
   @override
   void initState() {
     super.initState();
-    accounts = {'google': null, 'microsoft': null};
-    
+    user.accounts = {'google': null, 'microsoft': null};
+
     // 1 second splash page
     isSplash = true;
-    new Future.delayed(new Duration(seconds:1), turnSplashOff);
+    new Future.delayed(new Duration(seconds: 1), turnSplashOff);
   }
 
   void turnSplashOff() {
@@ -34,25 +36,31 @@ class _AppState extends State<BrightPigApp> with UserAccount {
 
   void performLogin(account, provider) {
     setState(() {
-      accounts[provider] = account;
+      user.accounts[provider] = account;
+      switch (provider) {
+        case 'google':
+          user.googleClient = new GoogleClient(user.accounts['google']);
+          user.googleClient.getApis();
+          break;
+      }
     });
   }
 
   void performLogout() {
     setState(() {
-      accounts.forEach((provider, account) {
-        accounts[provider] = null;
+      user.accounts.forEach((provider, account) {
+        user.accounts[provider] = null;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isLoggedIn = accounts.values.any((account) {
+    bool isLoggedIn = user.accounts.values.any((account) {
       return account != null;
     });
     var initialPage = isLoggedIn
-        ? new HomePage(logoutFn: performLogout)
+        ? new HomePage(user: user, logoutFn: performLogout)
         : new LoginPage(loginFn: performLogin);
 
     // initialPage = isSplash ? new SplashPage() : initialPage;
@@ -60,7 +68,8 @@ class _AppState extends State<BrightPigApp> with UserAccount {
       duration: const Duration(seconds: 3),
       firstChild: new SplashPage(),
       secondChild: initialPage,
-      crossFadeState: isSplash ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      crossFadeState:
+          isSplash ? CrossFadeState.showFirst : CrossFadeState.showSecond,
     );
 
     return new MaterialApp(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../auth/user_account.dart';
-import 'package:flutter/scheduler.dart';
 import '../constants/colors.dart';
 import '../widgets/meeting_tile.dart';
 
@@ -10,10 +9,13 @@ class HomePage extends StatefulWidget {
   final Function logoutFn;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyHomePageState createState() => new _MyHomePageState(logoutFn);
 }
 
 class _MyHomePageState extends State<HomePage> with UserAccount {
+  final Function logoutFn;
+  _MyHomePageState(this.logoutFn);
+
   @override
   Widget build(BuildContext context) {
     var _children = <Widget>[

@@ -54,12 +54,16 @@ class MeetingTile extends StatelessWidget {
         title = title,
         inviteeNames = inviteeNames;
 
+  /// Format the list a invitees nicely.
   String get inviteeString {
     return (this.inviteeNames == null || this.inviteeNames.length == 0)
         ? ""
-        : inviteeNames.reduce((i1, i2) {
-            return "$i1, $i2";
-          });
+        : this.inviteeNames.length == 1
+            ? "Invitee: " + inviteeNames.first
+            : "Invitees: " +
+                inviteeNames.sublist(0, inviteeNames.length - 1).join(", ") +
+                " and " +
+                inviteeNames.last;
   }
 
   @override
@@ -79,26 +83,23 @@ class MeetingTile extends StatelessWidget {
       child: new Row(
         children: <Widget>[
           new CalendarIcon(date: dateTime),
-          new Container(
+          new Expanded(
+              child: new Container(
             padding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
             child: new Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  new Text("Introductory Meeting With BrightPig",
+                  new Text(title,
                       style: new TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                           color: const Color.fromRGBO(126, 35, 93, 1.0))),
                   new Text(new PrettyDateTime(dateTime).toString()),
-                  new Text(
-                    this.inviteeString,
-                    
-                    maxLines: 1,
-                    overflow: TextOverflow.fade,
-                  )
+                  new Container(
+                      margin: const EdgeInsets.fromLTRB(0.0, 3.0, 0.0, 0.0),
+                      child: new Text(this.inviteeString))
                 ]),
-          ),
+          )),
         ],
       ),
     );

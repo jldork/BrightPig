@@ -3,6 +3,7 @@ import 'auth/user_account.dart';
 import 'dart:async';
 import 'pages/index.dart';
 import 'auth/google_client.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 void main() => runApp(new BrightPigApp());
 
@@ -18,14 +19,13 @@ class BrightPigApp extends StatefulWidget {
 class _AppState extends State<BrightPigApp> {
   bool isSplash;
   bool isLoggedIn;
-  UserAccount user = new UserAccount();
-  
+  Map<String, GoogleSignInAccount> accounts;
+
   @override
   void initState() {
     super.initState();
-    user.accounts = {'google': null, 'microsoft': null};
+    accounts = {'google': null};
 
-    // 1 second splash page
     isSplash = true;
     new Future.delayed(new Duration(seconds: 1), turnSplashOff);
   }
@@ -36,42 +36,38 @@ class _AppState extends State<BrightPigApp> {
 
   void performLogin(account, provider) {
     setState(() {
-      user.accounts[provider] = account;
-      switch (provider) {
-        case 'google':
-          user.googleClient = new GoogleClient(user.accounts['google']);
-          user.googleClient.getApis();
-          break;
-      }
+      accounts[provider] = account;
     });
   }
 
   void performLogout() {
     setState(() {
-      user.accounts.forEach((provider, account) {
-        user.accounts[provider] = null;
+      accounts.forEach((provider, account) {
+        accounts[provider] = null;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isLoggedIn = user.accounts.values.any((account) {
+    bool isLoggedIn = accounts.values.any((account) {
       return account != null;
     });
-    
+
     var initialPage = isLoggedIn
-        ? new HomePage(user: user, logoutFn: performLogout)
+        ? new UserAccount(
+            accounts: accounts, 
+            child: new HomePage(logoutFn: performLogout)
+            )
         : new LoginPage(loginFn: performLogin);
 
     Widget animatedStart = new AnimatedCrossFade(
-      duration: const Duration(seconds: 3),
-      firstChild: new SplashPage(),
-      secondChild: initialPage,
-      crossFadeState:
-          isSplash ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-      firstCurve: Curves.fastOutSlowIn
-    );
+        duration: const Duration(seconds: 3),
+        firstChild: new SplashPage(),
+        secondChild: initialPage,
+        crossFadeState:
+            isSplash ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+        firstCurve: Curves.fastOutSlowIn);
 
     return new MaterialApp(
         title: 'BrightPig',

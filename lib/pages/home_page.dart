@@ -6,28 +6,30 @@ import '../widgets/button_pair.dart';
 
 class HomePage extends StatefulWidget {
   final Function logoutFn;
-  UserAccount user;
-  HomePage({Key key, this.user, this.logoutFn}) : super(key: key);
+  HomePage({Key key, this.logoutFn}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState(user, logoutFn);
+  _MyHomePageState createState() => new _MyHomePageState(logoutFn);
 }
 
 
-class _MyHomePageState extends State<HomePage> with UserAccount {
+class _MyHomePageState extends State<HomePage> {
   final Function logoutFn;
-  UserAccount user;
 
-  _MyHomePageState(this.user, this.logoutFn);
+  _MyHomePageState(this.logoutFn);
 
   void initState() {
     super.initState();
-    // var events = await user.googleClient.getCalendarEvents();
-    // print(events);
   }
 
   @override
   Widget build(BuildContext context) {
+
+    print("\n\n");
+    print("INITIALIZING HOME_PAGE STATE");
+    print(UserAccount.of(context).accounts);
+    print("\n\n");
+
     var _meetingTiles = <Widget>[
       new MeetingTile(
           new DateTime.now().toUtc(), "Introductory Meeting With BrightPig",

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import '../auth/user_account.dart';
 import '../constants/colors.dart';
 import '../widgets/meeting_tile.dart';
 import '../widgets/button_pair.dart';
+import '../auth/google_client.dart';
+import '../auth/user_account.dart';
+import 'package:googleapis/calendar/v3.dart';
+import 'package:googleapis/people/v1.dart';
+import 'dart:async';
 
 class HomePage extends StatefulWidget {
   final Function logoutFn;
@@ -12,23 +16,30 @@ class HomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState(logoutFn);
 }
 
-
 class _MyHomePageState extends State<HomePage> {
   final Function logoutFn;
-
   _MyHomePageState(this.logoutFn);
+
+  CalendarApi calendarApi;
+  PeopleApi peopleApi;
 
   void initState() {
     super.initState();
   }
 
+  void _getApis(googleSignInAccount) async {
+    // Unfortunately, the build function completes before this
+    Future<Map<String, String>> futureHeaders = googleSignInAccount.authHeaders;
+    Map<String, String> headers = await futureHeaders;
+    final httpClient = new GoogleHttpClient(headers);
+    this.calendarApi = new CalendarApi(httpClient);
+    this.peopleApi = new PeopleApi(httpClient);
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    print("\n\n");
-    print("INITIALIZING HOME_PAGE STATE");
-    print(UserAccount.of(context).accounts);
-    print("\n\n");
+    var googleSignInAccount = UserAccount.of(context).accounts['google'];
+    _getApis(googleSignInAccount);
 
     var _meetingTiles = <Widget>[
       new MeetingTile(
@@ -65,7 +76,7 @@ class _MyHomePageState extends State<HomePage> {
         ),
       ),
     );
-  
-  return new Container(child: homepageScaffold, height:480.0, width:320.0);
+
+    return new Container(child: homepageScaffold, height: 480.0, width: 320.0);
   }
 }

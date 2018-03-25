@@ -42,7 +42,7 @@ class _MyHomePageState extends State<HomePage> with UserAccount {
           inviteeNames: ["Ola Gamberi"])
     ];
 
-    return new Scaffold(
+    Scaffold homepageScaffold = new Scaffold(
       drawer: new Drawer(child: new ListView()),
       appBar: new AppBar(
           backgroundColor: PALE_GREY,
@@ -63,5 +63,7 @@ class _MyHomePageState extends State<HomePage> with UserAccount {
         ),
       ),
     );
+  
+  return new Container(child: homepageScaffold, height:480.0, width:320.0);
   }
 }

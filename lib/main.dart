@@ -59,17 +59,18 @@ class _AppState extends State<BrightPigApp> {
     bool isLoggedIn = user.accounts.values.any((account) {
       return account != null;
     });
+    
     var initialPage = isLoggedIn
         ? new HomePage(user: user, logoutFn: performLogout)
         : new LoginPage(loginFn: performLogin);
 
-    // initialPage = isSplash ? new SplashPage() : initialPage;
     Widget animatedStart = new AnimatedCrossFade(
       duration: const Duration(seconds: 3),
       firstChild: new SplashPage(),
       secondChild: initialPage,
       crossFadeState:
           isSplash ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      firstCurve: Curves.fastOutSlowIn
     );
 
     return new MaterialApp(

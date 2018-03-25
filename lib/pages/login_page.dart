@@ -25,8 +25,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        body: new Container(
+    return new Container(
       child: new Center(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -44,6 +43,8 @@ class LoginPage extends StatelessWidget {
       decoration: new BoxDecoration(
         gradient: backgroundGradient,
       ),
-    ));
+      height: 480.0,
+      width: 320.0
+    );
   }
 }

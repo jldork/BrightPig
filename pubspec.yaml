@@ -2,7 +2,7 @@ name: bright_pig
 description: A new Flutter project.
 
 dependencies:
-  google_sign_in: "2.0.0"
+  google_sign_in: "3.0.2"
   #googleapis_auth: "0.2.5" - Not Using
   googleapis: "0.50.0"
   flutter:

@@ -46,16 +46,14 @@ class _MyHomePageState extends State<HomePage> {
     Map<String, String> headers = await futureHeaders;
     final httpClient = new GoogleHttpClient(headers);
     this.calendarApi = new CalendarApi(httpClient);
-    // this.peopleApi = new PeopleApi(httpClient);
   }
 
   Future<Events> _getCalendarEvents() async {
-    var dataFuture = await calendarApi.events.list("primary",
+    Events dataFuture = await calendarApi.events.list("primary",
         singleEvents: true,
         orderBy: 'startTime',
         maxResults: 10,
         timeMin: new DateTime.now().toUtc());
-
     return dataFuture;
   }
 
@@ -71,9 +69,17 @@ class _MyHomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var googleSignInAccount = UserAccount.of(context).accounts['google'];
     _getApis(googleSignInAccount).then((none) {
+      print("APIS received");
       _getCalendarEvents().then((data) {
+        print("**********************************************************");
+        print("----------------------------------------------------------");
         List<Event> eventsData = data.items;
+        print(eventsData);
+
+        print("----------------------------------------------------------");
+        print("**********************************************************");
       });
+
     });
 
     Scaffold homepageScaffold = new Scaffold(

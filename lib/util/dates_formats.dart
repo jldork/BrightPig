@@ -65,6 +65,9 @@ class PrettyDateTime {
 
   @override
   String toString() {
+    if (this.dateTime == null){
+      return "";
+    }
     var dayOfWeek = TextConversions.daysOfWeek[this.dateTime.weekday];
     var monthName = TextConversions.monthNames[this.dateTime.month];
     var timeString = new LocalTime(this.dateTime).toString().padLeft(2, "0");

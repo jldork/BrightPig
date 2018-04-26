@@ -11,22 +11,19 @@ class MeetingTile extends StatelessWidget {
   /// Format the list a invitees nicely
   String get inviteeString {
     if (event.attendees == null || event.attendees.length == 0){
-      return "";
-    } else if (event.attendees.length == 1) {
-      return "Invitee: " + event.attendees.toString();
-      // map((attendee) => attendee.toString()).toList()
-    } else {
-      return "Invitees: " + event.attendees.toString();
+      return "Invitees: None";
     }
+
+    List<gcal.EventAttendee> attendees = event.attendees; 
+    attendees.removeAt(0); // Remove Host
+    
+    String labelString = (event.attendees.length == 1) ? "Invitee: " : "Invitees: ";
+    String attendeeString = event.attendees.map((attendee)=> attendee.email).toList().join(", ");
+    return  labelString + attendeeString;
   }
 
   @override
   Widget build(BuildContext context) {
-    print("**************************************");
-    print("Title: ${event.summary}");
-    print("Attendees: ${event.attendees}");
-    print("DateTime: ${event.start.dateTime}");
-    print("**************************************");
     return new Container(
       margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, .0),
       padding: const EdgeInsets.fromLTRB(12.0, 20.0, 20.0, 12.0),

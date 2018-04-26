@@ -7,7 +7,7 @@ packages:
       name: _discoveryapis_commons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.5"
+    version: "0.1.6"
   analyzer:
     dependency: transitive
     description:
@@ -91,7 +91,7 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
+    version: "0.1.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -129,7 +129,7 @@ packages:
       name: googleapis
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.50.0"
+    version: "0.50.1"
   html:
     dependency: transitive
     description:

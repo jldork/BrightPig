@@ -4,8 +4,7 @@ import '../widgets/meeting_tile.dart';
 import '../widgets/button_pair.dart';
 import '../auth/google_client.dart';
 import '../auth/user_account.dart';
-import 'package:googleapis/calendar/v3.dart';
-import 'package:googleapis/people/v1.dart';
+import 'package:googleapis/calendar/v3.dart' as gcal;
 import 'dart:async';
 
 class HomePage extends StatefulWidget {
@@ -20,40 +19,42 @@ class _MyHomePageState extends State<HomePage> {
   final Function logoutFn;
   _MyHomePageState(this.logoutFn);
 
-  CalendarApi calendarApi;
-  PeopleApi peopleApi;
+  gcal.CalendarApi calendarApi;
+  List<Widget> _meetings;
 
-  void initState() {
-    super.initState();
-  }
-
-  void _getApis(googleSignInAccount) async {
-    // Unfortunately, the build function completes before this
+  Future<Null> _getApis(googleSignInAccount) async {
     Future<Map<String, String>> futureHeaders = googleSignInAccount.authHeaders;
     Map<String, String> headers = await futureHeaders;
     final httpClient = new GoogleHttpClient(headers);
-    this.calendarApi = new CalendarApi(httpClient);
-    this.peopleApi = new PeopleApi(httpClient);
+    this.calendarApi = new gcal.CalendarApi(httpClient);
+  }
+
+  Future<gcal.Events> _getCalendarEvents() async {
+    gcal.Events dataFuture = await calendarApi.events.list("primary",
+        singleEvents: true,
+        orderBy: 'startTime',
+        maxResults: 10,
+        timeMin: new DateTime.now().toUtc());
+    return dataFuture;
+  }
+
+  void initState() {
+    super.initState();
+    _meetings = [];
   }
 
   @override
   Widget build(BuildContext context) {
-    var googleSignInAccount = UserAccount.of(context).accounts['google'];
-    _getApis(googleSignInAccount);
-
-    var _meetingTiles = <Widget>[
-      new MeetingTile(
-          new DateTime.now().toUtc(), "Introductory Meeting With BrightPig",
-          inviteeNames: [
-            "Andreas Thoma",
-            "James Leung",
-            "Karla Polo",
-            "Michael Davis",
-            "Thomas Matecki"
-          ]),
-      new MeetingTile(new DateTime.now().toUtc(), "BrightPig User Feedback",
-          inviteeNames: ["Ola Gamberi"])
-    ];
+    if (_meetings.length == 0) {
+      var googleSignInAccount = UserAccount.of(context).accounts['google'];
+      _getApis(googleSignInAccount).then((none) {
+        _getCalendarEvents().then((data) {
+          setState(() {
+            _meetings = data.items.map((event) => MeetingTile(event)).toList();
+          });
+        });
+      });
+    }
 
     Scaffold homepageScaffold = new Scaffold(
       drawer: new Drawer(child: new ListView()),
@@ -70,7 +71,7 @@ class _MyHomePageState extends State<HomePage> {
             new FilterButtonPair(),
             new Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: _meetingTiles,
+              children: _meetings,
             )
           ],
         ),

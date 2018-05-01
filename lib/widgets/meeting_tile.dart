@@ -2,24 +2,26 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import '../util/dates_formats.dart';
 import 'calendar_icon.dart';
-import 'package:googleapis/calendar/v3.dart' as gcal; 
+import 'package:googleapis/calendar/v3.dart' as gcal;
 
 class MeetingTile extends StatelessWidget {
   final gcal.Event event;
-  MeetingTile(gcal.Event event): event = event;
+  MeetingTile(gcal.Event event) : event = event;
 
   /// Format the list a invitees nicely
   String get inviteeString {
-    if (event.attendees == null || event.attendees.length == 0){
+    if (event.attendees == null || event.attendees.length == 0) {
       return "Invitees: None";
     }
 
-    List<gcal.EventAttendee> attendees = event.attendees; 
+    List<gcal.EventAttendee> attendees = event.attendees;
     attendees.removeAt(0); // Remove Host
-    
-    String labelString = (event.attendees.length == 1) ? "Invitee: " : "Invitees: ";
-    String attendeeString = event.attendees.map((attendee)=> attendee.email).toList().join(", ");
-    return  labelString + attendeeString;
+
+    String labelString =
+        (event.attendees.length == 1) ? "Invitee: " : "Invitees: ";
+    String attendeeString =
+        event.attendees.map((attendee) => attendee.email).toList().join(", ");
+    return labelString + attendeeString;
   }
 
   @override
@@ -40,7 +42,10 @@ class MeetingTile extends StatelessWidget {
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new CalendarIcon(date: event.start.dateTime),
+          new CalendarIcon(
+              date: (event.start.dateTime != null)
+                  ? event.start.dateTime
+                  : event.start.date),
           new Expanded(
               child: new Container(
             padding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),

@@ -1,8 +1,7 @@
-# bright_pig
+## Bright Pig
 
-A new Flutter project.
+Brightpig is a personal relationship manager that lives in your mobile device.
 
-## Getting Started
+BrightPig analyzes your digital life and condenses all of information into a simple briefing pushed directly to your mobile phone. 
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+With Brightpig, you’ll consistently be the smartest person in the room.

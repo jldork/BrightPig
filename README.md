@@ -1,4 +1,4 @@
-## Bright Pig
+## BrightPig
 
 Brightpig is a personal relationship manager that lives in your mobile device.
 

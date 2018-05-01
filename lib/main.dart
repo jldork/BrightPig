@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'auth/user_account.dart';
 import 'dart:async';
 import 'pages/index.dart';
-import 'auth/google_client.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 void main() => runApp(new BrightPigApp());
@@ -60,6 +59,12 @@ class _AppState extends State<BrightPigApp> {
             child: new HomePage(logoutFn: performLogout)
             )
         : new LoginPage(loginFn: performLogin);
+
+    /****************/
+    /* REMOVE LATER */
+    /****************/
+
+    initialPage = new EventPage();
 
     Widget animatedStart = new AnimatedCrossFade(
         duration: const Duration(seconds: 3),

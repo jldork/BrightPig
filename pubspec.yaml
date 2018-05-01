@@ -4,6 +4,7 @@ description: A new Flutter project.
 dependencies:
   google_sign_in: "3.0.2"
   #googleapis_auth: any - Not Using
+  flutter_webview_plugin: "^0.1.5"
   googleapis: any
   flutter:
     sdk: flutter

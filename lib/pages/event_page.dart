@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/calendar_icon.dart';
 import '../widgets/primary_button.dart';
 import '../constants/colors.dart';
+import 'package:googleapis/calendar/v3.dart' as gcal;
 
 class FloatingStage extends StatelessWidget {
   const FloatingStage({Key key, this.children});
@@ -72,6 +73,9 @@ class EventDetails extends StatelessWidget {
 }
 
 class EventPage extends StatelessWidget {
+  const EventPage({Key key, this.event});
+  final gcal.Event event;
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

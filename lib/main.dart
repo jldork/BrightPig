@@ -71,8 +71,6 @@ class _AppState extends State<BrightPigApp> {
     return new MaterialApp(
         title: 'BrightPig',
         home: animatedStart,
-        routes: <String, WidgetBuilder>{
-          '/event': (_) => new EventPage()
-        });
+        routes: <String, WidgetBuilder>{});
   }
 }

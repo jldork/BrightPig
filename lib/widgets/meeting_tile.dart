@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../util/dates_formats.dart';
 import 'calendar_icon.dart';
 import 'package:googleapis/calendar/v3.dart' as gcal;
+import '../pages/event_page.dart';
 
 class MeetingTile extends StatelessWidget {
   final gcal.Event event;
@@ -28,7 +29,9 @@ class MeetingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return new GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, '/event');
+          Navigator.push(context, new MaterialPageRoute(
+            builder: (BuildContext context) => new EventPage(event: this.event)
+            ));
         },
         child: new Container(
           margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, .0),

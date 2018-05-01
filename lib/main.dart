@@ -60,12 +60,6 @@ class _AppState extends State<BrightPigApp> {
             )
         : new LoginPage(loginFn: performLogin);
 
-    /****************/
-    /* REMOVE LATER */
-    /****************/
-
-    initialPage = new EventPage();
-
     Widget animatedStart = new AnimatedCrossFade(
         duration: const Duration(seconds: 3),
         firstChild: new SplashPage(),
@@ -77,6 +71,8 @@ class _AppState extends State<BrightPigApp> {
     return new MaterialApp(
         title: 'BrightPig',
         home: animatedStart,
-        routes: <String, WidgetBuilder>{});
+        routes: <String, WidgetBuilder>{
+          '/event': (_) => new EventPage()
+        });
   }
 }

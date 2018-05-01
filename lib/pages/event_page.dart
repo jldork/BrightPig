@@ -50,6 +50,9 @@ class EventBriefButton extends StatelessWidget {
 }
 
 class EventDetails extends StatelessWidget {
+  const EventDetails({Key key, this.event});
+  final gcal.Event event;
+
   @override
   Widget build(BuildContext context) {
     return new Row(children: <Widget>[
@@ -60,7 +63,7 @@ class EventDetails extends StatelessWidget {
         child: new Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              new Text("Introductory Meeting with Brightpig",
+              new Text(event.summary.toString(),
                   style: titleStyle),
               new Text("10:00 AM | Monday, March 27th 2018", style: textStyle),
               new Container(
@@ -87,7 +90,7 @@ class EventPage extends StatelessWidget {
             title: new Image.asset('assets/images/logo_h.png')),
         body: new Container(
             child: new FloatingStage(
-                children: [new EventDetails(), new EventBriefButton()]),
+                children: [new EventDetails(event: this.event), new EventBriefButton()]),
             decoration: new BoxDecoration(
               color: PURPLE_GREY,
             )));

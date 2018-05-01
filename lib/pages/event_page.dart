@@ -43,9 +43,7 @@ class EventBriefButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Column(children: [
-      new PrimaryButton(
-        buttonText: 'Event Brief',
-        onClick: () {})
+      new PrimaryButton(buttonText: 'Event Brief', onClick: () {})
     ]);
   }
 }
@@ -76,13 +74,18 @@ class EventDetails extends StatelessWidget {
 class EventPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Container(
-        child: new FloatingStage(children: [
-          new EventDetails(),
-          new EventBriefButton()
-          ]),
-        decoration: new BoxDecoration(
-          color: PURPLE_GREY,
-        ));
+    return new Scaffold(
+        drawer: new Drawer(child: new ListView()),
+        appBar: new AppBar(
+            backgroundColor: PALE_GREY,
+            actions: <Widget>[],
+            centerTitle: true,
+            title: new Image.asset('assets/images/logo_h.png')),
+        body: new Container(
+            child: new FloatingStage(
+                children: [new EventDetails(), new EventBriefButton()]),
+            decoration: new BoxDecoration(
+              color: PURPLE_GREY,
+            )));
   }
 }

@@ -61,8 +61,7 @@ class MeetingTile extends StatelessWidget {
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                               color: const Color.fromRGBO(126, 35, 93, 1.0))),
-                      new Text(
-                          new PrettyDateTime(event.start.dateTime).toString()),
+                      new Text(datetimeToString(event.start.dateTime)),
                       new Container(
                           margin: const EdgeInsets.fromLTRB(0.0, 3.0, 0.0, 0.0),
                           child: new Text(this.inviteeString))

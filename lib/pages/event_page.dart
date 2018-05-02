@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/calendar_icon.dart';
 import '../widgets/primary_button.dart';
 import '../constants/colors.dart';
+import '../util/dates_formats.dart';
 import 'package:googleapis/calendar/v3.dart' as gcal;
 
 class FloatingStage extends StatelessWidget {
@@ -55,20 +56,23 @@ class EventDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String attendeeString = event.attendees == null ? "None" : event.attendees.map((attendee) => attendee.email).toList().join(", ");
     return new Row(children: <Widget>[
-      new CalendarIcon(date: new DateTime(1)),
+      new CalendarIcon(date: this.event.start.dateTime),
       new Expanded(
           child: new Container(
         padding: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 0.0),
         child: new Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              new Text(event.summary.toString(),
-                  style: titleStyle),
-              new Text("10:00 AM | Monday, March 27th 2018", style: textStyle),
+              new Text(event.summary.toString(), style: titleStyle),
+              new Text(datetimeToString(this.event.start.dateTime),
+                  style: textStyle),
               new Container(
                   margin: const EdgeInsets.fromLTRB(0.0, 3.0, 0.0, 0.0),
-                  child: new Text("Invitees: Thomas Matecki", style: textStyle))
+                  child: new Text(
+                      "Invitees: $attendeeString",
+                      style: textStyle))
             ]),
       ))
     ]);
@@ -89,8 +93,10 @@ class EventPage extends StatelessWidget {
             centerTitle: true,
             title: new Image.asset('assets/images/logo_h.png')),
         body: new Container(
-            child: new FloatingStage(
-                children: [new EventDetails(event: this.event), new EventBriefButton()]),
+            child: new FloatingStage(children: [
+              new EventDetails(event: this.event),
+              new EventBriefButton()
+            ]),
             decoration: new BoxDecoration(
               color: PURPLE_GREY,
             )));

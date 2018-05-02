@@ -1,4 +1,3 @@
-
 abstract class TextConversions {
   static final Map<int, String> monthAbbrev = {
     1: "Jan",
@@ -65,7 +64,7 @@ class PrettyDateTime {
 
   @override
   String toString() {
-    if (this.dateTime == null){
+    if (this.dateTime == null) {
       return "";
     }
     var dayOfWeek = TextConversions.daysOfWeek[this.dateTime.weekday];
@@ -81,4 +80,25 @@ class PrettyDateTime {
 
     return "$timeString | $dayOfWeek, $monthName ${dateTime.day}$daySuffix ${dateTime.year}";
   }
+}
+
+String datetimeToString(dateTime) {
+  if (dateTime == null) {
+    return "";
+  }
+  String dayOfWeek = TextConversions.daysOfWeek[dateTime.weekday];
+  String monthName = TextConversions.monthNames[dateTime.month];
+  DateTime localTime = new LocalTime(dateTime).dateTime;
+  String minutestring = localTime.minute < 10 ? "0${localTime.minute}": "${localTime.minute}";
+  
+  String meridiem = localTime.hour < 12 ? "AM" : "PM";
+  String timeString = "${localTime.hour % 12}:$minutestring $meridiem";
+   
+
+  Map<int, String> suffixes = {1: "st", 2: "nd", 3: "rd"};
+
+  int remainder = dateTime.day % 10;
+  String daySuffix = [1, 2, 3].contains(remainder) ? suffixes[remainder] : "th";
+
+  return "$timeString | $dayOfWeek, $monthName ${dateTime.day}$daySuffix ${dateTime.year}";
 }

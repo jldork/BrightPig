@@ -56,32 +56,6 @@ class LocalTime {
   }
 }
 
-class PrettyDateTime {
-  DateTime dateTime;
-  PrettyDateTime(DateTime dateTime) {
-    this.dateTime = dateTime;
-  }
-
-  @override
-  String toString() {
-    if (this.dateTime == null) {
-      return "";
-    }
-    var dayOfWeek = TextConversions.daysOfWeek[this.dateTime.weekday];
-    var monthName = TextConversions.monthNames[this.dateTime.month];
-    var timeString = new LocalTime(this.dateTime).toString().padLeft(2, "0");
-
-    var daySuffix =
-        (dateTime.day == 1 || dateTime.day == 21 || dateTime.day == 31)
-            ? "st"
-            : (dateTime.day == 2 || dateTime.day == 22)
-                ? "nd"
-                : (dateTime.day == 3 || dateTime.day == 23) ? "rd" : "th";
-
-    return "$timeString | $dayOfWeek, $monthName ${dateTime.day}$daySuffix ${dateTime.year}";
-  }
-}
-
 String datetimeToString(dateTime) {
   if (dateTime == null) {
     return "";

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/calendar_icon.dart';
-import '../widgets/primary_button.dart';
 import '../constants/colors.dart';
 import '../util/dates_formats.dart';
 import 'package:googleapis/calendar/v3.dart' as gcal;
@@ -41,12 +40,50 @@ final titleStyle = new TextStyle(
     color: TITLE_PURPLE,
     fontFamily: 'SFPro');
 
-class EventBriefButton extends StatelessWidget {
+class DetailTab extends StatelessWidget {
+  DetailTab({Key key, this.tabText});
+  final String tabText;
+
   @override
   Widget build(BuildContext context) {
-    return new Column(children: [
-      new PrimaryButton(buttonText: 'Event Brief', onClick: () {})
-    ]);
+    return new GestureDetector(
+        onTap: () {},
+        child: new Container(
+          decoration: new BoxDecoration(
+            gradient: accentGradient,
+            boxShadow: <BoxShadow>[
+              new BoxShadow(
+                  color: new Color.fromRGBO(0, 0, 0, 0.5),
+                  offset: new Offset(2.0, 0.0),
+                  blurRadius: 4.0)
+            ],
+          ),
+          width: 110.0,
+          height: 40.0,
+          child: new Center(
+            child: new Text(
+              tabText,
+              style: new TextStyle(
+                color: Colors.white,
+                fontFamily: 'SFPro',
+                fontSize: 14.0,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ),
+        ));
+  }
+}
+
+class DetailTabs extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+        padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+        child: new Row(children: [
+          new DetailTab(tabText: 'Attendees'),
+          new DetailTab(tabText: 'Documents')
+        ]));
   }
 }
 
@@ -56,7 +93,9 @@ class EventDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String attendeeString = event.attendees == null ? "None" : event.attendees.map((attendee) => attendee.email).toList().join(", ");
+    String attendeeString = event.attendees == null
+        ? "None"
+        : event.attendees.map((attendee) => attendee.email).toList().join(", ");
     return new Row(children: <Widget>[
       new CalendarIcon(date: this.event.start.dateTime),
       new Expanded(
@@ -70,12 +109,26 @@ class EventDetails extends StatelessWidget {
                   style: textStyle),
               new Container(
                   margin: const EdgeInsets.fromLTRB(0.0, 3.0, 0.0, 0.0),
-                  child: new Text(
-                      "Invitees: $attendeeString",
-                      style: textStyle))
+                  child:
+                      new Text("Invitees: $attendeeString", style: textStyle))
             ]),
       ))
     ]);
+  }
+}
+
+class DetailBox extends StatelessWidget {
+  const DetailBox({Key key});
+
+  @override
+  Widget build(BuildContext context) {
+    return new Expanded(
+        child: new Container(
+            color: Colors.white,
+            child: Row(children: <Widget>[
+              new Text("Skateboard gentrify edison bulb lomo fam ."),
+            ],))
+        );
   }
 }
 
@@ -95,7 +148,8 @@ class EventPage extends StatelessWidget {
         body: new Container(
             child: new FloatingStage(children: [
               new EventDetails(event: this.event),
-              new EventBriefButton()
+              new DetailTabs(),
+              new DetailBox()
             ]),
             decoration: new BoxDecoration(
               color: PURPLE_GREY,

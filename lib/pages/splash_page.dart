@@ -11,9 +11,7 @@ class SplashPage extends StatelessWidget {
           width: 256.0,
           height: 256.0,
         )),
-        decoration: new BoxDecoration(gradient: backgroundGradient),
-        height: 512.0,
-        width: 512.0);
+        decoration: new BoxDecoration(gradient: backgroundGradient));
     return splash;
   }
 }

@@ -42,9 +42,7 @@ class LoginPage extends StatelessWidget {
       ),
       decoration: new BoxDecoration(
         gradient: backgroundGradient,
-      ),
-      height: 480.0,
-      width: 320.0
+      )
     );
   }
 }

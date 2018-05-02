@@ -78,6 +78,6 @@ class _MyHomePageState extends State<HomePage> {
       ),
     );
 
-    return new Container(child: homepageScaffold, height: 480.0, width: 320.0);
+    return new Container(child: homepageScaffold);
   }
 }

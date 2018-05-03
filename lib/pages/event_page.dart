@@ -41,15 +41,12 @@ final titleStyle = new TextStyle(
     fontFamily: 'SFPro');
 
 class DetailTab extends StatelessWidget {
-  DetailTab({Key key, this.tabText});
+  DetailTab({Key key, this.tabText, this.selected, this.setTabFn});
   final String tabText;
+  final bool selected; 
+  final Function setTabFn;
 
-  @override
-  Widget build(BuildContext context) {
-    return new GestureDetector(
-        onTap: () {},
-        child: new Container(
-          decoration: new BoxDecoration(
+  final BoxDecoration selectedDeco = new BoxDecoration(
             gradient: accentGradient,
             boxShadow: <BoxShadow>[
               new BoxShadow(
@@ -57,7 +54,24 @@ class DetailTab extends StatelessWidget {
                   offset: new Offset(2.0, 0.0),
                   blurRadius: 4.0)
             ],
-          ),
+          );
+
+  final BoxDecoration unselectedDeco = new BoxDecoration(
+            color: Colors.grey,
+            boxShadow: <BoxShadow>[
+              new BoxShadow(
+                  color: new Color.fromRGBO(0, 0, 0, 0.5),
+                  offset: new Offset(2.0, 0.0),
+                  blurRadius: 4.0)
+            ],
+          );
+
+  @override
+  Widget build(BuildContext context) {
+    return new GestureDetector(
+        onTap: () {setTabFn(this.tabText);},
+        child: new Container(
+          decoration: this.selected ? selectedDeco: unselectedDeco,
           width: 110.0,
           height: 40.0,
           child: new Center(
@@ -76,13 +90,23 @@ class DetailTab extends StatelessWidget {
 }
 
 class DetailTabs extends StatelessWidget {
+  DetailTabs({Key key, this.currentTab, this.setTabFn});
+  final String currentTab;
+  final Function setTabFn;
+
   @override
   Widget build(BuildContext context) {
     return new Container(
         padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
         child: new Row(children: [
-          new DetailTab(tabText: 'Attendees'),
-          new DetailTab(tabText: 'Documents')
+          new DetailTab(
+            tabText: 'Attendees', 
+            selected: currentTab=='Attendees',
+            setTabFn: setTabFn),
+          new DetailTab(
+            tabText: 'Documents', 
+            selected: currentTab=='Documents',
+            setTabFn: setTabFn)
         ]));
   }
 }
@@ -132,12 +156,32 @@ class DetailBox extends StatelessWidget {
   }
 }
 
-class EventPage extends StatelessWidget {
+class EventPage extends StatefulWidget {
   const EventPage({Key key, this.event});
   final gcal.Event event;
 
   @override
+  _EventPageState createState() => new _EventPageState(event);  
+}
+
+class _EventPageState extends State<EventPage> {
+  final gcal.Event event;
+  String _currentTab;
+  _EventPageState(this.event);
+  
+  void initState(){
+    super.initState();
+    _currentTab = 'Attendees';
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final Function _setTabFn = (tabName){
+        setState((){
+        _currentTab = tabName;
+      });
+    };
+
     return new Scaffold(
         drawer: new Drawer(child: new ListView()),
         appBar: new AppBar(
@@ -148,7 +192,7 @@ class EventPage extends StatelessWidget {
         body: new Container(
             child: new FloatingStage(children: [
               new EventDetails(event: this.event),
-              new DetailTabs(),
+              new DetailTabs(currentTab: _currentTab, setTabFn: _setTabFn),
               new DetailBox()
             ]),
             decoration: new BoxDecoration(
